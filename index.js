@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -42,6 +42,21 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    //using PUT method to update quantity at inventory page
+    app.put("/inventory/:id", async (req, res) => {
+      const id = req.params.id;
+      const upDoc = req.body;
+      console.log(id);
+      console.log(upDoc);
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: { quantity: upDoc?.quantity },
+      };
+      const result = await productImage.updateOne(filter, updateDoc, options);
+      res.send(result);
+    });
   } finally {
     console.log("Connected to db");
   }
@@ -49,7 +64,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("The heroku port is running successfully");
 });
 
 app.listen(port, () => {
