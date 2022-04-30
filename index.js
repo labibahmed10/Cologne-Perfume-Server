@@ -25,10 +25,20 @@ async function run() {
   try {
     await client.connect();
     const basicImages = client.db("colognePerfume").collection("basicImages");
+    const productImage = client.db("colognePerfume").collection("productCollection");
 
+    //loading basic images
     app.get("/basicImages", async (req, res) => {
       const query = {};
       const cursor = basicImages.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    //loading inventory items
+    app.get("/inventory", async (req, res) => {
+      const query = {};
+      const cursor = productImage.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
