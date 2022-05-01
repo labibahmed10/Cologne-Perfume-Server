@@ -57,6 +57,14 @@ async function run() {
       const result = await productImage.updateOne(filter, updateDoc, options);
       res.send(result);
     });
+
+    //using DELETE method to delete single item
+    app.delete("/deleteItem/:id", async (req, res) => {
+      const { id } = req.params;
+      const query = { _id: ObjectId(id) };
+      const result = await productImage.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     console.log("Connected to db");
   }
