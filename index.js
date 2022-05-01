@@ -65,6 +65,30 @@ async function run() {
       const result = await productImage.deleteOne(query);
       res.send(result);
     });
+
+    //using POST method to add new product here
+    app.post("/inventory", async (req, res) => {
+      const addedProduct = req.body;
+      const result = await productImage.insertOne(addedProduct);
+      res.send(result);
+    });
+
+    //getting my items only by email & GET method
+    app.get("/myItems", async (req, res) => {
+      const { email } = req.query;
+      const query = { email: email };
+      const cursor = productImage.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    //Deleting single my Items by DElETE method
+    app.delete("/myItems/:id", async (req, res) => {
+      const { id } = req.params;
+      const query = { _id: ObjectId(id) };
+      const result = await productImage.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     console.log("Connected to db");
   }
