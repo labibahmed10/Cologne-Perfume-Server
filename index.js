@@ -108,7 +108,7 @@ async function run() {
       }
     });
 
-    //Deleting single my Items by DElETE method
+    //Deleting single my Items by DElETE
     app.delete("/myItems/:id", async (req, res) => {
       const { id } = req.params;
       const query = { _id: ObjectId(id) };
