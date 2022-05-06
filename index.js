@@ -15,7 +15,6 @@ app.use(express.json());
 const jwt = require("jsonwebtoken");
 
 //mongodb side
-
 const uri = `mongodb+srv://${process.env.COL_USER}:${process.env.COL_PASS}@cluster0.zqp7w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
@@ -143,6 +142,7 @@ function verifyToken(token) {
   return email;
 }
 
+//basic check
 app.get("/", (req, res) => {
   res.send("The heroku port is running successfully");
 });
